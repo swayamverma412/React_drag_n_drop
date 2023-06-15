@@ -1,5 +1,5 @@
 body{
-  background-color: #EBF8FE;
+  background-color: #FFFF;
 }
 .app{
   text-align: center;
@@ -9,38 +9,39 @@ body{
 .input-group{
   display: flex;
   flex-direction: column;
-  max-width: 400px;
+  max-width: 600px;
   margin:auto;
 }
 .input-group input{
-  padding:15px;
+  padding:25px;
 }
 
 .btn{
-  background-color: #888CF0;
-  color:#000000;
+  background-color: #8A4893;
+  color:#FFFF;
   margin-top: 20px;
   box-shadow: none;
   border:none;
+  width: 400px;
   padding:15px;
   cursor: pointer;
+  border-radius: 15px;
   font-size: 20px;
 }
 
 .list-sort{
-  max-width: 480px;
+  width: 480px;
   margin:auto;
 }
 
 .list-container{
   display: flex;
-  width: 100%;
+  width: 400px;
   padding:40px;
 }
 
 .list-container__right{
   flex:1;
-  border:2px dotted #888CF0;
 }
 .list-container__left{
   flex:1;
@@ -49,11 +50,12 @@ body{
 .list-item{
   display:flex;
   align-items: center;
-  background-color: #FFD2D2;
+  background-color: #fff;
   padding:0px 20px;
   margin-top:15px;
   cursor:move;
   transition: all .2s ease-in-out;
+  width: 600px;
 
 }
 .list-item:hover{
@@ -67,29 +69,15 @@ body{
 h1{
   font-size: 45px;
 }
-.app__navigation{
-  display: flex;
-  justify-content: flex-end;
-  
-}
-.app__navigation >a{
-    margin-bottom: 20px;
-    text-decoration: none;
-    font-size: 12px;
-    color: #888CF0;
-    border: 1px solid;
-    padding: 5px;
-}
+
 .container-sort__wrapper{
   display:flex;
   justify-content: center;
 }
 .container-sort__column {
   flex:1;
-  margin-right:10px;
 }
 
 .container-sort__items {
-  border: 0.5px solid grey;
-  min-height: 200px;
+ min-height: 200px;
 }

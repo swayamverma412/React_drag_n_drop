@@ -1,13 +1,23 @@
 import React from "react";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaPencilAlt, FaInfoCircle } from "react-icons/fa";
+import Switch from "react-switch";
+
 
 function ListSort() {
   const [Items, setItems] = React.useState([
-    { id: 1, name: "Profile", visible: true },
-    { id: 2, name: "Summary", visible: true },
-    { id: 3, name: "Project", visible: true },
+    { id: 1, name: "Profile Summary", visible: true },
+    { id: 2, name: "Academic and Cocurricular Activities", visible: true },
+    { id: 3, name: "Summer Internship Experience", visible: true },
+    { id: 4, name: "Work Experience", visible: true },
+    { id: 5, name: "Project", visible: true },
+    { id: 6, name: "Certifications", visible: true },
+    { id: 7, name: "Leadership Positions", visible: true },
+    { id: 8, name: "Extracurricular", visible: true },
+    { id: 9, name: "Education", visible: true },
   ]);
   const [newItem, setNewItem] = React.useState("");
+  const [editItemId, setEditItemId] = React.useState<number | null>(null);
+  const [changedItemIds, setChangedItemIds] = React.useState<number[]>([]);
 
   // save reference for dragItem and dragOverItem
   const dragItem = React.useRef<any>(null);
@@ -26,7 +36,6 @@ function ListSort() {
 
     // reset the position ref
     dragItem.current = null;
-    dragOverItem.current = null;
 
     // update the actual array
     setItems(_Items);
@@ -41,6 +50,10 @@ function ListSort() {
       return item;
     });
     setItems(updatedItems);
+
+    if (!changedItemIds.includes(itemId)) {
+      setChangedItemIds([...changedItemIds, itemId]);
+    }
   };
 
   // handle toggle visibility
@@ -54,6 +67,24 @@ function ListSort() {
     setItems(updatedItems);
   };
 
+  // handle edit item
+  const handleEditItem = (itemId: number | null) => {
+    setEditItemId(itemId);
+  };
+  
+
+  // handle save item
+  const handleSaveItem = () => {
+    setEditItemId(null);
+    setChangedItemIds([]);
+  };
+
+  // handle cancel edit
+  const handleCancelEdit = () => {
+    setEditItemId(null);
+    setChangedItemIds([]);
+  };
+
   // handle new item addition
   const handleAddItem = () => {
     const newItems = { id: Date.now(), name: newItem, visible: true };
@@ -65,15 +96,6 @@ function ListSort() {
   return (
     <div className="app">
       <h1>Select Your Section</h1>
-      <div>
-        <input
-          type="text"
-          value={newItem}
-          onChange={(e) => setNewItem(e.target.value)}
-          placeholder="Add a new item"
-        />
-        <button onClick={handleAddItem}>Add</button>
-      </div>
       <div className="list-sort">
         {Items.map((item, index) => (
           <div
@@ -86,16 +108,41 @@ function ListSort() {
             onDragOver={(e) => e.preventDefault()}
           >
             <i className="fa-solid fa-bars"></i>
+            <button className="info-button" title="Description of the center">
+              <FaInfoCircle />
+            </button>
             <input
               type="text"
               value={item.name}
               onChange={(e) => handleNameChange(e, item.id)}
+              readOnly={editItemId !== item.id}
+              style={{ border: "none", width: "300px" }} 
             />
-            <button onClick={() => handleToggleVisibility(item.id)}>
-             {item.visible ? <FaEye /> : <FaEyeSlash />}
-            </button>
-            
+            {editItemId === item.id ? (
+              <>
+                {changedItemIds.includes(item.id) && (
+                  <button onClick={handleSaveItem}>Save</button>
+                )}
+              </>
+            ) : (
+              <button onClick={() => handleEditItem(item.id)}>
+                <FaPencilAlt />
+              </button>
+            )}
+            <Switch
+              checked={item.visible}
+              onChange={() => handleToggleVisibility(item.id)}
+              onColor="#86d3ff"
+              offColor="#dddddd"
+              onHandleColor="#2693e6"
+              offHandleColor="#ffffff"
+              handleDiameter={18}
+              uncheckedIcon={false}
+              checkedIcon={false}
+              height={20}
+              width={40}
 
+            />
           </div>
         ))}
       </div>
